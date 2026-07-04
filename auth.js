@@ -14,7 +14,7 @@
   async function initDB() {
     try {
       const SQL = await initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}` });
-      const savedDb = localStorage.getItem('aeroleaf_db');
+      const savedDb = localStorage.getItem('monitor_db');
       if (savedDb) {
         const uInt8Array = new Uint8Array(savedDb.split(','));
         db = new SQL.Database(uInt8Array);
@@ -24,6 +24,14 @@
         db.run("INSERT INTO users (email, password) VALUES (?, ?);", [DEMO_EMAIL, DEMO_PASS]);
         saveDB();
       }
+      
+      const activeUser = localStorage.getItem('monitor_active_user');
+      if (activeUser) {
+        $('user-email').textContent = activeUser;
+        $('login-screen').hidden = true;
+        $('dashboard').hidden = false;
+        window.startSimulation();
+      }
     } catch (err) {
       console.error("Failed to initialize database:", err);
     }
@@ -32,7 +40,7 @@
   function saveDB() {
     if (!db) return;
     const data = db.export();
-    localStorage.setItem('aeroleaf_db', data.join(','));
+    localStorage.setItem('monitor_db', data.join(','));
   }
 
   initDB();
@@ -101,6 +109,7 @@
       const stmt = db.prepare("SELECT * FROM users WHERE email = ? AND password = ?");
       stmt.bind([email, pass]);
       if (stmt.step()) {
+        localStorage.setItem('monitor_active_user', email);
         $('user-email').textContent = email;
         $('login-screen').classList.add('fade-out');
         setTimeout(() => {
@@ -119,6 +128,7 @@
   });
 
   $('sign-out-btn').addEventListener('click', function () {
+    localStorage.removeItem('monitor_active_user');
     window.stopSimulation(); // Call global stopSimulation
     $('dashboard').hidden = true;
     $('login-screen').hidden = false;
