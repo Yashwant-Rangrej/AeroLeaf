@@ -36,7 +36,15 @@
         </div>
         <div class="form-group">
           <label for="password-input">Password</label>
-          <input type="password" id="password-input" required placeholder="••••••••">
+          <div class="password-input-wrap" style="position: relative;">
+            <input type="password" id="password-input" required placeholder="••••••••" style="padding-right: 40px;">
+            <button type="button" id="toggle-password" class="toggle-password-btn" aria-label="Show password" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0;">
+              <svg id="eye-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
         </div>
         <div id="login-error" class="login-error" hidden>Invalid email or password.</div>
         <div id="login-success" class="login-success" hidden>Account created successfully!</div>

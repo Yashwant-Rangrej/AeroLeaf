@@ -99,7 +99,7 @@
       S.aq       = walk(S.aq,       10,  500,  18,   40);
       S.wind     = walk(S.wind,     0,   20,   1.4,  5.5);
       S.uv       = walk(S.uv,       0,   14,   0.9,  5);
-      S.rainRate = Math.max(0, walk(S.rainRate, 0, 12, 1.2, 1.5));
+      S.rainRate = Math.max(0, walk(S.rainRate, -5, 12, 1.2, -2));
 
       /* -- Wind direction (intermittent) -- */
       S.dirTick++;
@@ -213,7 +213,7 @@
       $('compass-needle').style.transform = 'rotate(' + deg + 'deg)';
 
       /* 8 Rainfall → drops + bucket */
-      $('rain-val').textContent = (S.rainTips * TIP_THRESHOLD).toFixed(1);
+      $('rain-val').textContent = (S.rainTips * TIP_THRESHOLD + S.rainAccum).toFixed(1);
       setStatus('rain-st', rainStatus(S.rainRate));
       $('rain-meta').textContent = 'Tips: ' + S.rainTips;
       const dropCount = Math.round(Math.min(MAX_DROPS, S.rainRate * 2));
