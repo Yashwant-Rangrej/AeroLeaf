@@ -1,0 +1,673 @@
+/* ============================================================
+       DESIGN TOKENS
+       ============================================================ */
+    :root {
+      --pine:      #16302A;
+      --parchment: #F5F2EA;
+      --ochre:     #B9822F;
+      --slate:     #3C5A66;
+      --lichen:    #5F7D5B;
+      --rust:      #9C4A32;
+
+      --border:    rgba(22,48,42,0.10);
+      --shadow-sm: 0 1px 3px rgba(22,48,42,0.07);
+      --radius:    8px;
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--parchment);
+      color: var(--pine);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    button { cursor:pointer; }
+    [hidden] { display:none !important; }
+
+    /* ============================================================
+       LOGIN SCREEN
+       ============================================================ */
+    .login-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--pine);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      transition: opacity 0.35s ease;
+    }
+    .login-screen.fade-out { opacity:0; pointer-events:none; }
+
+    .login-card {
+      background: var(--parchment);
+      padding: 44px 38px 36px;
+      border-radius: var(--radius);
+      width: 100%;
+      max-width: 390px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+    }
+
+    .login-brand { text-align:center; margin-bottom:30px; }
+    .login-brand svg { display:block; margin:0 auto 10px; }
+    .login-brand h1 {
+      font-family: 'Fraunces', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--pine);
+      letter-spacing: -0.3px;
+    }
+    .login-subtitle {
+      font-size: 12px;
+      color: var(--slate);
+      margin-top: 4px;
+      letter-spacing: 0.3px;
+    }
+
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--pine);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 10px 13px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      background: #fff;
+      color: var(--pine);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--ochre);
+      box-shadow: 0 0 0 3px rgba(185,130,47,0.12);
+    }
+    .form-group input.field-error { border-color: var(--rust); }
+
+    .login-error {
+      color: var(--rust);
+      font-size: 13px;
+      text-align: center;
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 11px;
+      background: var(--ochre);
+      color: var(--parchment);
+      border: none;
+      border-radius: 5px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      transition: opacity 0.15s;
+      letter-spacing: 0.2px;
+    }
+    .login-btn:hover { opacity:0.88; }
+    .login-btn:focus-visible { outline:2px solid var(--ochre); outline-offset:3px; }
+
+    .login-success {
+      color: var(--lichen);
+      font-size: 13px;
+      text-align: center;
+      margin-bottom: 14px;
+      font-weight: 500;
+      background: rgba(95,125,91,0.10);
+      padding: 8px;
+      border-radius: 4px;
+    }
+
+    .toggle-link {
+      text-align: center;
+      font-size: 12px;
+      margin-top: 16px;
+      color: var(--slate);
+    }
+    .toggle-link a {
+      color: var(--ochre);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .toggle-link a:hover {
+      text-decoration: underline;
+    }
+
+    .demo-hint {
+      text-align: center;
+      font-size: 11px;
+      color: var(--slate);
+      margin-top: 22px;
+      font-family: 'IBM Plex Mono', monospace;
+      opacity: 0.6;
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       TOP BAR
+       ============================================================ */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--pine);
+      color: var(--parchment);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 54px;
+    }
+    .top-bar-left, .top-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-text {
+      font-family: 'Fraunces', serif;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+    }
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      opacity: 0.75;
+      letter-spacing: 0.2px;
+    }
+    .pulse-dot {
+      width: 7px; height: 7px;
+      background: var(--lichen);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(95,125,91,0.55); }
+      50%       { box-shadow: 0 0 0 5px rgba(95,125,91,0); }
+    }
+    .live-clock {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+    .user-email {
+      font-size: 12px;
+      opacity: 0.6;
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .sign-out-btn {
+      background: transparent;
+      color: var(--parchment);
+      border: 1px solid rgba(245,242,234,0.18);
+      border-radius: 4px;
+      padding: 5px 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      transition: border-color 0.15s;
+    }
+    .sign-out-btn:hover { border-color: rgba(245,242,234,0.45); }
+    .sign-out-btn:focus-visible { outline:2px solid var(--ochre); outline-offset:2px; }
+
+    /* ============================================================
+       CONTENT WRAPPER
+       ============================================================ */
+    .content {
+      max-width: 1260px;
+      margin: 0 auto;
+      padding: 28px 24px 48px;
+    }
+
+    /* ============================================================
+       SECTION TITLES
+       ============================================================ */
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--pine);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .section-title::before {
+      content: '';
+      width: 3px;
+      height: 17px;
+      background: var(--ochre);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       TURBINE STRIP
+       ============================================================ */
+    .turbine-section { margin-bottom: 34px; }
+
+    .turbine-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+
+    .turbine-tile {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 14px 14px;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+      position: relative;
+    }
+    .turbine-tile::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 12px; right: 12px;
+      height: 2px;
+      border-radius: 0 0 2px 2px;
+    }
+    .turbine-tile:nth-child(1)::before,
+    .turbine-tile:nth-child(4)::before { background: var(--lichen); }
+    .turbine-tile:nth-child(2)::before,
+    .turbine-tile:nth-child(5)::before { background: var(--ochre); }
+    .turbine-tile:nth-child(3)::before { background: var(--slate); }
+
+    .turbine-icon-area {
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 6px;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .turbine-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--slate);
+      margin-bottom: 3px;
+      font-weight: 500;
+    }
+    .turbine-reading {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--pine);
+      line-height: 1.1;
+    }
+    .turbine-unit {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--slate);
+      margin-left: 2px;
+    }
+
+    /* Battery bar */
+    .battery-bar-wrap {
+      width: 100%;
+      height: 6px;
+      background: rgba(22,48,42,0.06);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+    .battery-fill {
+      height: 100%;
+      background: var(--lichen);
+      border-radius: 3px;
+      transition: width 0.6s ease, background 0.4s ease;
+    }
+    .battery-fill.mid { background: var(--ochre); }
+    .battery-fill.low { background: var(--rust); }
+
+    /* Rotor blades */
+    .rotor-blades {
+      animation: spin 3s linear infinite;
+      transform-origin: center;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ============================================================
+       WEATHER SENSOR GRID
+       ============================================================ */
+    .weather-section {}
+
+    .sensor-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    /* ============================================================
+       SENSOR CARD (shared)
+       ============================================================ */
+    .sensor-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 13px 16px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .card-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--pine);
+      letter-spacing: 0.1px;
+    }
+    .card-range {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      color: var(--slate);
+      opacity: 0.55;
+    }
+    .card-animation {
+      height: 140px;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-footer {
+      padding: 0 16px 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card-reading { display:flex; align-items:baseline; }
+    .card-value {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--pine);
+    }
+    .card-unit {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--slate);
+      margin-left: 3px;
+    }
+    .card-status {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+    .st-good     { color:var(--lichen); background:rgba(95,125,91,0.10); }
+    .st-moderate { color:var(--ochre);  background:rgba(185,130,47,0.10); }
+    .st-alert    { color:var(--rust);   background:rgba(156,74,50,0.10); }
+    .st-info     { color:var(--slate);  background:rgba(60,90,102,0.10); }
+
+    /* ============================================================
+       TEMPERATURE — Mercury Column
+       ============================================================ */
+    .mercury-scale-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 8px;
+      fill: var(--slate);
+      opacity: 0.5;
+    }
+
+    /* ============================================================
+       HUMIDITY — Droplet + Ripples
+       ============================================================ */
+    .humidity-wrap {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .ripple-zone {
+      position: absolute;
+      bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ripple-ring {
+      position: absolute;
+      border: 1.5px solid var(--slate);
+      border-radius: 50%;
+      opacity: 0;
+      animation: ripple-out 2.8s ease-out infinite;
+    }
+    .ripple-ring:nth-child(2) { animation-delay: 0.9s; }
+    .ripple-ring:nth-child(3) { animation-delay: 1.8s; }
+    @keyframes ripple-out {
+      0%   { width:14px; height:7px; opacity:0.45; }
+      100% { width:90px; height:30px; opacity:0; }
+    }
+
+    /* ============================================================
+       SOLAR — Pulsing Sun
+       ============================================================ */
+    .sun-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .sun-pulse-group {
+      animation: sun-breathe 3s ease-in-out infinite;
+      transform-origin: 50px 50px;
+    }
+    @keyframes sun-breathe {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(var(--sun-s, 1.06)); }
+    }
+    .sun-rays-spin {
+      animation: spin 25s linear infinite;
+      transform-origin: 50px 50px;
+    }
+
+    /* ============================================================
+       PRESSURE — Needle Gauge
+       ============================================================ */
+    .gauge-needle-line {
+      transition: transform 1s ease-out;
+      transform-origin: 60px 62px;
+    }
+    .gauge-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 7px;
+      fill: var(--slate);
+      opacity: 0.5;
+    }
+
+    /* ============================================================
+       AIR QUALITY — Floating Particles
+       ============================================================ */
+    .particles-area {
+      position: absolute;
+      inset: 0;
+    }
+    .particle {
+      position: absolute;
+      background: var(--lichen);
+      border-radius: 50%;
+      opacity: 0;
+      animation: pfloat 3.5s ease-in-out infinite alternate;
+    }
+    .particle.visible { opacity: 0.55; }
+    @keyframes pfloat {
+      0%   { transform: translate(0,0); }
+      100% { transform: translate(var(--dx,6px), var(--dy,-10px)); }
+    }
+
+    /* ============================================================
+       WIND SPEED — Micro-Turbine
+       ============================================================ */
+    .micro-turbine-blades {
+      animation: spin 2s linear infinite;
+      transform-origin: 30px 30px;
+    }
+
+    /* ============================================================
+       WIND DIRECTION — Compass
+       ============================================================ */
+    .compass-needle-g {
+      transition: transform 1.6s cubic-bezier(0.34,1.56,0.64,1);
+      transform-origin: 50px 50px;
+    }
+    .compass-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      fill: var(--pine);
+    }
+    .compass-tick {
+      stroke: var(--pine);
+      opacity: 0.15;
+    }
+
+    /* ============================================================
+       RAINFALL — Drops + Tipping Bucket
+       ============================================================ */
+    .rain-area {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .rdrop {
+      position: absolute;
+      width: 1.5px;
+      height: 9px;
+      background: var(--slate);
+      border-radius: 0 0 1px 1px;
+      opacity: 0;
+      animation: rfall 0.9s linear infinite;
+    }
+    .rdrop.active { opacity: 0.5; }
+    @keyframes rfall {
+      0%   { transform: translateY(-12px); opacity:0.55; }
+      100% { transform: translateY(135px); opacity:0.08; }
+    }
+    .bucket-g {
+      transition: transform 0.35s ease;
+      transform-origin: 50% 100%;
+    }
+    .bucket-g.tip { transform: rotate(28deg); }
+    .rain-meta {
+      position: absolute;
+      bottom: 6px;
+      right: 10px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      color: var(--slate);
+      opacity: 0.55;
+    }
+
+    /* ============================================================
+       UV INDEX — Banded Bar
+       ============================================================ */
+    .uv-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 0 24px;
+      gap: 10px;
+    }
+    .uv-bar {
+      display: flex;
+      width: 100%;
+      height: 10px;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .uv-band { flex:1; }
+    .uv-band-low      { background: var(--lichen); }
+    .uv-band-mod      { background: var(--ochre); opacity:0.7; }
+    .uv-band-high     { background: var(--ochre); }
+    .uv-band-vhigh    { background: var(--rust); opacity:0.75; }
+    .uv-band-extreme  { background: var(--rust); }
+    .uv-track {
+      position: relative;
+      width: 100%;
+      height: 24px;
+    }
+    .uv-marker {
+      position: absolute;
+      top: 0;
+      width: 3px;
+      height: 18px;
+      background: var(--pine);
+      border-radius: 1.5px;
+      transition: left 0.6s ease;
+      transform: translateX(-1.5px);
+    }
+    .uv-labels {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 8px;
+      color: var(--slate);
+      opacity: 0.5;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width:1199px) {
+      .turbine-grid { grid-template-columns: repeat(3,1fr); }
+      .sensor-grid  { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width:767px) {
+      .turbine-grid { grid-template-columns: repeat(2,1fr); }
+      .sensor-grid  { grid-template-columns: 1fr; }
+      .top-bar {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 10px 16px;
+        gap: 6px;
+      }
+      .content { padding: 18px 14px 40px; }
+      .user-email { display:none; }
+    }
+
+    /* ============================================================
+       REDUCED MOTION
+       ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01s !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01s !important;
+      }
+    }
